@@ -34,6 +34,11 @@ public class CartController {
 	public List<Items> getCartItems(){
 		return itemService.getAllCartItems();
 	}
+	
+	@GetMapping("/get-by-itemId/{itemId}")
+	public Items getCartItems(@PathVariable("itemId") int itemId){
+		return itemService.getItemByItemId(itemId);
+	}
 		
 	@PostMapping("/add-cart/{cartId}")
 	public Cart createNewCart(@PathVariable("cartId") int cartId) {

@@ -25,19 +25,6 @@ class CartMicroserviceApplicationTests {
 	@MockBean
 	private ItemRepository itemRepository;
 	
-	@Test
-	void testGetAllCartItems() {
-		Mockito.when(itemRepository.findAll()).thenReturn(Stream.of(
-				new Items(1,10,"Google Pixel",60000.0,1),
-				new Items(1,20,"Pant",2000.0,1))
-				.collect(Collectors.toList()));
-		assertEquals(2,itemService.getAllCartItems().size());
-	}
-	
-	@Test
-	void testDeleteAllCartItems() {
-		assertEquals("All items are deleted", itemService.deleteAllItems());
-	}
 	
 	@Test
 	void testAddItemToCart() {
@@ -47,10 +34,30 @@ class CartMicroserviceApplicationTests {
 	}
 	
 	@Test
+	void testGetAllCartItems() {
+		Mockito.when(itemRepository.findAll()).thenReturn(Stream.of(
+				new Items(1,10,"Google Pixel",60000.0,1),
+				new Items(1,20,"Pant",2000.0,1))
+				.collect(Collectors.toList()));	
+	
+		assertEquals(2,itemService.getAllCartItems().size());
+	}
+	
+	
+	@Test
 	void testUpdateCartItem() {
 		Items item =  new Items(1,10,"Google Pixel",60000.0,1);
-		Mockito.when(itemRepository.save(item)).thenReturn(item);
-		assertEquals(item, itemService.updateItem(item));
+		itemRepository.save(item);
+		
+		item.setProductName("One Plus 10T");
+		itemRepository.save(item);
+		
+		assertEquals("One Plus 10T", item.getProductName());
+	}
+	
+	@Test
+	void testDeleteAllCartItems() {
+		assertEquals("All items are deleted", itemService.deleteAllItems());
 	}
 
 }

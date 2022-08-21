@@ -18,6 +18,10 @@ public class ItemService {
 		return itemRepository.findAll();
 	}
 	
+	public Items getItemByItemId(int itemId) {
+		return itemRepository.findByItemId(itemId);
+	}
+	
 	public Items addItemToCart(Items item) {
 		return itemRepository.save(item);
 	}
