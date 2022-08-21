@@ -49,7 +49,8 @@ class CartMicroserviceApplicationTests {
 	@Test
 	void testUpdateCartItem() {
 		Items item =  new Items(1,10,"Google Pixel",60000.0,1);
-		assertEquals(itemRepository.saveAndFlush(item), itemService.updateItem(item));
+		Mockito.when(itemRepository.save(item)).thenReturn(item);
+		assertEquals(item, itemService.updateItem(item));
 	}
 
 }

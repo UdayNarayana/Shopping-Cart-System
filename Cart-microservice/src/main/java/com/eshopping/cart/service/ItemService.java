@@ -23,7 +23,7 @@ public class ItemService {
 	}
 	
 	public Items updateItem(Items item) {
-		return itemRepository.saveAndFlush(item);
+		return itemRepository.save(item);
 	}
 
 	public String deleteItemByitemId(int itemId) {
