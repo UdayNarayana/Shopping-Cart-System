@@ -30,9 +30,10 @@ public class ItemService {
 		return itemRepository.save(item);
 	}
 
-	public String deleteItemByitemId(int itemId) {
-		itemRepository.deleteById(itemId);
-		return "Item deleted";
+	
+	public String deleteItemByItemId(int itemId) {
+		 itemRepository.deleteById(itemId);
+		 return "Item with ID "+itemId+" is deleted.";
 	}
 	
 	public String deleteAllItems() {

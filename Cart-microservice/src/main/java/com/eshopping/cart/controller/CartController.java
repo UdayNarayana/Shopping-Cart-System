@@ -29,26 +29,24 @@ public class CartController {
 	
 	Cart cart = new Cart();
 	
-	
 	@GetMapping("/get-items")
 	public List<Items> getCartItems(){
 		return itemService.getAllCartItems();
 	}
-	
-	@GetMapping("/get-by-itemId/{itemId}")
-	public Items getCartItems(@PathVariable("itemId") int itemId){
+		
+	@GetMapping("/get-item-by-id/{itemId}")
+	public Items getItemById(@PathVariable("itemId")int itemId) {
 		return itemService.getItemByItemId(itemId);
 	}
-		
-	@PostMapping("/add-cart/{cartId}")
+	
+	@PostMapping("/create-cart/{cartId}")
 	public Cart createNewCart(@PathVariable("cartId") int cartId) {
 		cart.setCartId(cartId);
-		cart.setTotalAmount(0.0);
 		return cartService.createCart(cart);
 	}
 	
 	@PostMapping("/add-items/{itemId}")
-	public Items adItemToCart(@RequestBody Items items,
+	public Items addItemToCart(@RequestBody Items items,
 							  @PathVariable("itemId") int itemId) {
 		items.setCartId(cart.getCartId());
 		items.setItemId(itemId);
@@ -60,9 +58,14 @@ public class CartController {
 		return itemService.updateItem(item);
 	}
 	
-	@DeleteMapping("/delete-item/{itemId}")
-	public String deleteCartItem(@PathVariable("itemId") int itemId) {
-		return itemService.deleteItemByitemId(itemId);
+	@DeleteMapping("/delete-item-by-id/{itemId}")
+	public String deleteItemById(@PathVariable("itemId") int itemId) {
+		return itemService.deleteItemByItemId(itemId);
+	}
+	
+	@DeleteMapping("/delete-items")
+	public String deleteCartItems() {
+		return itemService.deleteAllItems();
 	}
 	
 	
