@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.eshopping.cart.model.Cart;
+import com.eshopping.cart.model.CartItems;
 import com.eshopping.cart.model.Items;
 import com.eshopping.cart.service.CartService;
 import com.eshopping.cart.service.ItemService;
@@ -39,9 +40,17 @@ public class CartController {
 		return itemService.getItemByItemId(itemId);
 	}
 	
+	@GetMapping("/view-all-items")
+	public CartItems getAllCartItems(){
+		return new CartItems(cart.getCartId(), 
+							 itemService.getAllCartItems() , 
+							 cartService.getTotalAmount());
+	}
+	
 	@PostMapping("/create-cart/{cartId}")
 	public Cart createNewCart(@PathVariable("cartId") int cartId) {
 		cart.setCartId(cartId);
+		cart.setTotalAmount(cartService.getTotalAmount());
 		return cartService.createCart(cart);
 	}
 	

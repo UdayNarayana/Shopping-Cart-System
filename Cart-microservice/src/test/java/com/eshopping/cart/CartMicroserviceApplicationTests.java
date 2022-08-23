@@ -69,7 +69,6 @@ class CartMicroserviceApplicationTests {
 	@Test
 	void testUpdateCartItem() {
 		Items item =  new Items(1,10,"Google Pixel",60000.0,1);
-		itemRepository.save(item);
 		
 		item.setProductName("One Plus 10T");
 		itemRepository.save(item);
