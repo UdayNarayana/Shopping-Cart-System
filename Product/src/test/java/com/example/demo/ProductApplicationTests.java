@@ -50,7 +50,6 @@ class ProductApplicationTests {
 	void testUpdateProduct() {
 		Product product =  new Product(1,"Google Pixel",60000.0,1,"mobile","a mobile");
 		productRepository.save(product);
-		
 		product.setProductName("One Plus 10T");
 		productRepository.save(product);
 		
@@ -61,5 +60,19 @@ class ProductApplicationTests {
 	void testDeleteAllCartproducts() {
 		assertEquals("All products are deleted", productService.deleteAllProducts());
 	}
+	
+	@Test
+	void testfindByProductId() {
+		Product product =  new Product(1,"Google Pixel",60000.0,1,"mobile","a mobile");
+		Mockito.when(productRepository.findByProductId(1)).thenReturn(product);
+		assertEquals(product, productService.getProductById(1));
+	}
+	
+	@Test
+	void testdeleteProductById() {
+		Product product =  new Product(1,"Google Pixel",60000.0,1,"mobile","a mobile");
+		assertEquals("Product deleted", productService.deleteProductById(1));
+	}
+	
 
 }

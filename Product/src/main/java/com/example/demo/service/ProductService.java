@@ -27,16 +27,12 @@ public class ProductService {
 		return productRepository.findByProductId(productId);
 	}
 	
-	public Product getProductByName(String productName) {
-		return productRepository.findByProductName(productName);
-	}
-	
 	public Product updateProduct(Product product) {
 		return productRepository.save(product);
 	}
 
 	public String deleteProductById(int productId) {
-		productRepository.deleteByProductId(productId);
+		productRepository.deleteById(productId);
 		return "Product deleted";
 	}
 	

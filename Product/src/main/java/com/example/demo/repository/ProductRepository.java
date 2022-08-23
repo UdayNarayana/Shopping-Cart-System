@@ -6,12 +6,12 @@ import org.springframework.stereotype.Repository;
 import com.example.demo.model.Product;
 
 @Repository
-public interface ProductRepository extends JpaRepository<Product, String> {
+public interface ProductRepository extends JpaRepository<Product, Integer> {
 	
 	Product findByProductName(String productName);
-	
 	Product findByProductType(String productType);
 	Product findByProductId(int productId);
-	void deleteByProductId(int productId);
+	
+	
 	
 }
