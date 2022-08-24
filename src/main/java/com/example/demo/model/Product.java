@@ -65,7 +65,7 @@ public class Product {
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	public int getImage() {
+	public String getImage() {
 		return productId;
 	}
 	public void setImage(String image) {
