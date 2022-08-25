@@ -55,7 +55,50 @@ class ProductApplicationTests {
 		
 		assertEquals("One Plus 10T", product.getProductName());
 	}
-	
+	@Test
+	void testUpdateProductId() {
+		Product product =  new Product(1,"Google Pixel",60000.0,1,"mobile","a mobile");
+		productRepository.save(product);
+		product.setProductId(2);
+		productRepository.save(product);
+		
+		assertEquals(2, product.getProductId());
+	}
+	@Test
+	void testUpdateProductPrice() {
+		Product product =  new Product(1,"Google Pixel",60000.0,1,"mobile","a mobile");
+		productRepository.save(product);
+		product.setPrice(70000.0);
+		productRepository.save(product);
+		assertEquals(70000.0, product.getPrice());
+	}
+	@Test
+	void testUpdateQuantity() {
+		Product product =  new Product(1,"Google Pixel",60000.0,1,"mobile","a mobile");
+		productRepository.save(product);
+		product.setQuantity(10);
+		productRepository.save(product);
+		
+		assertEquals(10, product.getQuantity());
+	}
+	@Test
+	void testUpdateProductType() {
+		Product product =  new Product(1,"Google Pixel",60000.0,1,"mobile","a mobile");
+		productRepository.save(product);
+		product.setProductType("Mobilephone");
+		productRepository.save(product);
+		
+		assertEquals("Mobilephone", product.getProductType());
+	}
+	@Test
+	void testUpdateProductDescription() {
+		Product product =  new Product(1,"Google Pixel",60000.0,1,"mobile","a mobile");
+		productRepository.save(product);
+		product.setDescription("a good one");
+		productRepository.save(product);
+		
+		assertEquals("a good one", product.getDescription());
+	}
 	@Test
 	void testDeleteAllCartproducts() {
 		assertEquals("All products are deleted", productService.deleteAllProducts());

@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
 	<name>Orders</name>
+<<<<<<< HEAD
 	<comment></comment>
+=======
+	<comment>Project Orders created by Buildship.</comment>
+>>>>>>> f1174f2e153822c7d8115f1eb6f6748dd8545ede
 	<projects>
 	</projects>
 	<buildSpec>
@@ -10,8 +14,25 @@
 			<arguments>
 			</arguments>
 		</buildCommand>
+<<<<<<< HEAD
 	</buildSpec>
 	<natures>
 		<nature>org.eclipse.jdt.core.javanature</nature>
+=======
+		<buildCommand>
+			<name>org.eclipse.buildship.core.gradleprojectbuilder</name>
+			<arguments>
+			</arguments>
+		</buildCommand>
+		<buildCommand>
+			<name>org.springframework.ide.eclipse.boot.validation.springbootbuilder</name>
+			<arguments>
+			</arguments>
+		</buildCommand>
+	</buildSpec>
+	<natures>
+		<nature>org.eclipse.jdt.core.javanature</nature>
+		<nature>org.eclipse.buildship.core.gradleprojectnature</nature>
+>>>>>>> f1174f2e153822c7d8115f1eb6f6748dd8545ede
 	</natures>
 </projectDescription>
