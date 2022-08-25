@@ -17,10 +17,10 @@ import com.example.demo.service.OrderService;
 
 @SpringBootTest
 class OrdersApplicationTests {
-	
+
 	@Autowired
 	private OrderService orderService;
-	
+
 	@MockBean
 	private OrderRepository orderRepository;
 
@@ -29,25 +29,25 @@ class OrdersApplicationTests {
 		Orders order =  new Orders(1,10,24.0,"cod","shipping",1);
 		Mockito.when(orderRepository.save(order)).thenReturn(order);
 		assertEquals(order, orderService.placeOrder(order));
-		
+
 	}
 	@Test
 	void testgetallorders() {
 		Mockito.when(orderRepository.findAll()).thenReturn(Stream.of(
 				new Orders(1,10,24.0,"cod","shipping",1),
 				new Orders(1,20,500.0,"e-wallet","placed",5))
-				.collect(Collectors.toList()));	
-	
+				.collect(Collectors.toList()));
+
 		assertEquals(2,orderService.getAll().size());
 	}
 	@Test
 	void testUpdateOrder() {
 		Orders order =  new Orders(1,10,24.0,"cod","shipping",1);
 		orderRepository.save(order);
-		
+
 		order.setOrderStatus("cancelled");
 		orderRepository.save(order);
-		
+
 		assertEquals("cancelled", order.getOrderStatus());
 	}
 	@Test

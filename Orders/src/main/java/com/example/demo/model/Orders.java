@@ -15,7 +15,7 @@ public class Orders {
 
 
 	public Orders() {
-		
+
 	}
 	public Orders(int orderId, int customerId, double amountPaid, String modeOfPayment, String orderStatus,
 			int quantity) {
@@ -62,6 +62,6 @@ public class Orders {
 	public void setQuantity(int quantity) {
 		this.quantity = quantity;
 	}
-	
+
 
 }
