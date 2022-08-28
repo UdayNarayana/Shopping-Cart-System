@@ -11,25 +11,29 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
+import com.example.demo.Repository.AddressRepository;
 import com.example.demo.Repository.OrderRepository;
 import com.example.demo.model.Orders;
 import com.example.demo.service.OrderService;
 
 @SpringBootTest
 class OrdersApplicationTests {
-
+	
 	@Autowired
 	private OrderService orderService;
-
+	
 	@MockBean
 	private OrderRepository orderRepository;
+	
+	@MockBean
+	private AddressRepository addressRepository;
 
 	@Test
 	void testplaceOrder() {
 		Orders order =  new Orders(1,10,24.0,"cod","shipping",1);
 		Mockito.when(orderRepository.save(order)).thenReturn(order);
 		assertEquals(order, orderService.placeOrder(order));
-
+		
 	}
 	@Test
 	void testplaceOrder1() {
@@ -57,9 +61,9 @@ class OrdersApplicationTests {
 		Mockito.when(orderRepository.findAll()).thenReturn(Stream.of(
 				new Orders(1,10,24.0,"cod","shipping",1),
 				new Orders(1,20,500.0,"e-wallet","placed",5))
-				.collect(Collectors.toList()));
-
-		assertEquals(2,orderService.getAll().size());
+				.collect(Collectors.toList()));	
+	
+		assertEquals(2,orderService.getAllOrders().size());
 	}
 	@Test
 	void testgetallorders1() {
@@ -68,7 +72,7 @@ class OrdersApplicationTests {
 				new Orders(2345,85,753,"e-wallet","cancelled",8))
 				.collect(Collectors.toList()));	
 	
-		assertEquals(2,orderService.getAll().size());
+		assertEquals(2,orderService.getAllOrders().size());
 	}
 	@Test
 	void testgetallorders2() {
@@ -77,7 +81,7 @@ class OrdersApplicationTests {
 				new Orders(2345,85,753,"e-wallet","cancelled",8))
 				.collect(Collectors.toList()));	
 	
-		assertEquals(2,orderService.getAll().size());
+		assertEquals(2,orderService.getAllOrders().size());
 	}
 	@Test
 	void testupdateOrder3() {
@@ -90,7 +94,6 @@ class OrdersApplicationTests {
 	void testUpdateOrder() {
 		Orders order =  new Orders(2345,85,753,"e-wallet","cancelled",8);
 		orderRepository.save(order);
-<<<<<<< HEAD
 		
 		order.setOrderStatus("placed");
 		orderRepository.save(order);
@@ -146,13 +149,6 @@ class OrdersApplicationTests {
 		orderRepository.save(order);
 		
 		assertEquals(453, order.getOrderId());
-=======
-
-		order.setOrderStatus("cancelled");
-		orderRepository.save(order);
-
-		assertEquals("cancelled", order.getOrderStatus());
->>>>>>> f1b843612ad7c32f7504669b28fa69ae04dfd44b
 	}
 	@Test
 	void testDeleteAllOrder() {
