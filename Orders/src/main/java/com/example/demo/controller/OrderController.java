@@ -88,7 +88,7 @@ public class OrderController {
 		return orderService.updateOrder(order);
 		
 	}
-	@DeleteMapping("/placeorder")
+	@DeleteMapping("/deleteorder")
 	public String deleteOrder(){
 		return orderService.deleteOrder();
 		
