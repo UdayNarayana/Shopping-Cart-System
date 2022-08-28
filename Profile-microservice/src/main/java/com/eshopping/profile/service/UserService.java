@@ -6,6 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.eshopping.profile.exception.DuplicateUsernameException;
+import com.eshopping.profile.exception.InvalidEmailFormatException;
+import com.eshopping.profile.exception.InvalidPasswordFormatException;
 import com.eshopping.profile.model.User;
 import com.eshopping.profile.repository.UserRepository;
 
@@ -36,7 +39,25 @@ public class UserService {
 	
 	public User registerUser(User user) {
 		String encodedPassword = bCryptPasswordEncoder.encode(user.getPassword());
+		
+		if(!user.getEmailId().matches("[a-z0-9]+@[a-z]+\\.[a-z]{2,3}")){
+			throw new InvalidEmailFormatException("Invalid email format.");
+		}
+		
+		if(!user.getPassword()
+		.matches("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$"))
+		{
+			throw new InvalidPasswordFormatException("Invalid password format.");
+		}
+		
 		user.setPassword(encodedPassword);
+		
+		User anotherUser = userRepository.findByUsername(user.getUsername());
+		
+		if(anotherUser!=null) {
+			throw new DuplicateUsernameException("Username already exists please try again");
+		}
+		
 		return userRepository.save(user);
 	}
 	
