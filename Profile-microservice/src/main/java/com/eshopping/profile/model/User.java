@@ -19,6 +19,7 @@ public class User {
 	private int userId;
 	private String fullName;
 	private String image;
+	private String username;
 	private String emailId;
 	private String password;
 	private long mobileNumber;
