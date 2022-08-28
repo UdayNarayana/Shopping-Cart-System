@@ -31,6 +31,7 @@ class ProfileMicroserviceApplicationTests {
 				1,
 				"test name",
 				"http://sample-image",
+				"test",
 				"test@mail.com",
 				"test",
 				1111111111,
@@ -51,6 +52,7 @@ class ProfileMicroserviceApplicationTests {
 		user.setUserId(1);
 		user.setFullName("test name");
 		user.setImage("http://sample-image");
+		user.setUsername("test");
 		user.setEmailId("test@mail.com");
 		user.setPassword("test");
 		user.setMobileNumber(1111111111);
@@ -67,10 +69,11 @@ class ProfileMicroserviceApplicationTests {
 	@Test
 	void testGetAllUsers() {
 		Mockito.when(userRepository.findAll()).thenReturn(Stream.of(
-				new User(
+			   new User(
 						1,
 						"test name",
 						"http://sample-image",
+						"test",
 						"test@mail.com",
 						"test",
 						1111111111,
@@ -83,6 +86,7 @@ class ProfileMicroserviceApplicationTests {
 						2,
 						"test name2",
 						"http://sample-image2",
+						"test2",
 						"test2@mail.com",
 						"test2",
 						1111111112,
@@ -102,6 +106,7 @@ class ProfileMicroserviceApplicationTests {
 				1,
 				"test name",
 				"http://sample-image",
+				"test",
 				"test@mail.com",
 				"test",
 				1111111111,
@@ -114,6 +119,7 @@ class ProfileMicroserviceApplicationTests {
 				2,
 				"test name",
 				user.getImage(),
+				user.getUsername(),
 				user.getEmailId(),
 				user.getPassword(),
 				1111111111,
@@ -128,47 +134,12 @@ class ProfileMicroserviceApplicationTests {
 	}
 	
 	@Test
-	void testGetUserByMobileNumber() {
-		User user = new User(
-				1,
-				"test name",
-				"http://sample-image",
-				"test@mail.com",
-				"test",
-				1111111111,
-				"test address",
-				"test about",
-				"21-08-2022",
-				"male",
-				"customer");
-		Mockito.when(userRepository.findByMobileNumber(1111111111)).thenReturn(user);
-		assertEquals(user, userService.getUserByMobileNumber(user.getMobileNumber()));
-	}
-	
-	@Test
-	void testGetUsersByFullName() {
-		User user = new User(
-				1,
-				"test name",
-				"http://sample-image",
-				"test@mail.com",
-				"test",
-				1111111111,
-				"test address",
-				"test about",
-				"21-08-2022",
-				"male",
-				"customer");
-		Mockito.when(userRepository.findByFullName("test name")).thenReturn(user);
-		assertEquals(user, userService.getUserByFullName("test name"));
-	}
-	
-	@Test
 	void testUpdateUser() {
 		User user = new User(
 				1,
 				"test name",
 				"http://sample-image",
+				"test",
 				"test@mail.com",
 				"test",
 				1111111111,
@@ -189,6 +160,7 @@ class ProfileMicroserviceApplicationTests {
 				1,
 				"test name",
 				"http://sample-image",
+				"test",
 				"test@mail.com",
 				"test",
 				1111111111,

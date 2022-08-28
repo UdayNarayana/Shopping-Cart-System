@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.eshopping.profile.exception.DuplicateUsernameException;
 import com.eshopping.profile.exception.InvalidEmailFormatException;
 import com.eshopping.profile.exception.InvalidPasswordFormatException;
+import com.eshopping.profile.exception.InvalidUsernameFormatException;
 import com.eshopping.profile.model.User;
 import com.eshopping.profile.repository.UserRepository;
 
@@ -29,16 +30,11 @@ public class UserService {
 		return userRepository.findByUserId(userId);
 	}
 	
-	public User getUserByMobileNumber(long mobileNumber) {
-		return userRepository.findByMobileNumber(mobileNumber);
-	}
-	
-	public User getUserByFullName(String fullName){
-		return userRepository.findByFullName(fullName);
+	public User getUserByUsername(String username) {
+		return userRepository.findByUsername(username);
 	}
 	
 	public User registerUser(User user) {
-		String encodedPassword = bCryptPasswordEncoder.encode(user.getPassword());
 		
 		if(!user.getEmailId().matches("[a-z0-9]+@[a-z]+\\.[a-z]{2,3}")){
 			throw new InvalidEmailFormatException("Invalid email format.");
@@ -50,7 +46,13 @@ public class UserService {
 			throw new InvalidPasswordFormatException("Invalid password format.");
 		}
 		
+		String encodedPassword = bCryptPasswordEncoder.encode(user.getPassword());
+		
 		user.setPassword(encodedPassword);
+		
+		if(!user.getUsername().matches("^(?=[a-zA-Z0-9._]{3,20}$)(?!.*[_.]{2})[^_.].*[^_.]$")) {
+			throw new InvalidUsernameFormatException("Invalid username format.");
+		}
 		
 		User anotherUser = userRepository.findByUsername(user.getUsername());
 		

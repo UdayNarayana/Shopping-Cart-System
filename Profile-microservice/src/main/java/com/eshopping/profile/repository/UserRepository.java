@@ -9,7 +9,5 @@ import com.eshopping.profile.model.User;
 public interface UserRepository extends JpaRepository<User, Integer> {
 	
 	User findByUserId(int userId);
-	User findByMobileNumber(long mobileNumber);
-	User findByFullName(String fullName);
 	User findByUsername(String username);
 }

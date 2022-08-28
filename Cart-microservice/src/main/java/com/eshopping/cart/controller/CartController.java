@@ -47,10 +47,8 @@ public class CartController {
 							 cartService.getTotalAmount());
 	}
 	
-	@PostMapping("/create-cart/{cartId}")
-	public Cart createNewCart(@PathVariable("cartId") int cartId) {
-		cart.setCartId(cartId);
-		cart.setTotalAmount(cartService.getTotalAmount());
+	@PostMapping("/create-cart")
+	public Cart createNewCart() {
 		return cartService.createCart(cart);
 	}
 	
