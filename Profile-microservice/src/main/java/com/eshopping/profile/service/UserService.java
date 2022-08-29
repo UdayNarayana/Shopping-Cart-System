@@ -41,7 +41,7 @@ public class UserService {
 		}
 		
 		if(!user.getPassword()
-		.matches("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$"))
+		.matches("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,20}$"))
 		{
 			throw new InvalidPasswordFormatException("Invalid password format.");
 		}
