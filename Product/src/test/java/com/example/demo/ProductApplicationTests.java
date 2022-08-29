@@ -30,7 +30,7 @@ class ProductApplicationTests {
 	
 	@Test
 	void testAddProduct() {
-		Product product =  new Product(1,"Google Pixel",60000.0,1,"mobile","a mobile");
+		Product product =  new Product(1,"Google Pixel",60000.0,1,"mobile","a mobile","img");
 		Mockito.when(productRepository.save(product)).thenReturn(product);
 		assertEquals(product, productService.addProducts(product));
 	}
@@ -38,8 +38,8 @@ class ProductApplicationTests {
 	@Test
 	void testGetAllProducts() {
 		Mockito.when(productRepository.findAll()).thenReturn(Stream.of(
-				new Product(1,"Google Pixel",60000.0,1,"mobile","a mobile"),
-				new Product(1,"Pant",2000.0,1,"jeans","Jeans"))
+				new Product(1,"Google Pixel",60000.0,1,"mobile","a mobile","img"),
+				new Product(1,"Pant",2000.0,1,"jeans","Jeans","img"))
 				.collect(Collectors.toList()));	
 	
 		assertEquals(2,productService.getAllProducts().size());
@@ -48,7 +48,7 @@ class ProductApplicationTests {
 	
 	@Test
 	void testUpdateProduct() {
-		Product product =  new Product(1,"Google Pixel",60000.0,1,"mobile","a mobile");
+		Product product =  new Product(1,"Google Pixel",60000.0,1,"mobile","a mobile","img");
 		productRepository.save(product);
 		product.setProductName("One Plus 10T");
 		productRepository.save(product);
@@ -56,8 +56,17 @@ class ProductApplicationTests {
 		assertEquals("One Plus 10T", product.getProductName());
 	}
 	@Test
+	void testUpdateImage() {
+		Product product =  new Product(1,"Google Pixel",60000.0,1,"mobile","a mobile","img");
+		productRepository.save(product);
+		product.setImage("imageofphone");
+		productRepository.save(product);
+		
+		assertEquals("imageofphone", product.getImage());
+	}
+	@Test
 	void testUpdateProductId() {
-		Product product =  new Product(1,"Google Pixel",60000.0,1,"mobile","a mobile");
+		Product product =  new Product(1,"Google Pixel",60000.0,1,"mobile","a mobile","img");
 		productRepository.save(product);
 		product.setProductId(2);
 		productRepository.save(product);
@@ -66,7 +75,7 @@ class ProductApplicationTests {
 	}
 	@Test
 	void testUpdateProductPrice() {
-		Product product =  new Product(1,"Google Pixel",60000.0,1,"mobile","a mobile");
+		Product product =  new Product(1,"Google Pixel",60000.0,1,"mobile","a mobile","img");
 		productRepository.save(product);
 		product.setPrice(70000.0);
 		productRepository.save(product);
@@ -74,7 +83,7 @@ class ProductApplicationTests {
 	}
 	@Test
 	void testUpdateQuantity() {
-		Product product =  new Product(1,"Google Pixel",60000.0,1,"mobile","a mobile");
+		Product product =  new Product(1,"Google Pixel",60000.0,1,"mobile","a mobile","img");
 		productRepository.save(product);
 		product.setQuantity(10);
 		productRepository.save(product);
@@ -83,7 +92,7 @@ class ProductApplicationTests {
 	}
 	@Test
 	void testUpdateProductType() {
-		Product product =  new Product(1,"Google Pixel",60000.0,1,"mobile","a mobile");
+		Product product =  new Product(1,"Google Pixel",60000.0,1,"mobile","a mobile","img");
 		productRepository.save(product);
 		product.setProductType("Mobilephone");
 		productRepository.save(product);
@@ -92,7 +101,7 @@ class ProductApplicationTests {
 	}
 	@Test
 	void testUpdateProductDescription() {
-		Product product =  new Product(1,"Google Pixel",60000.0,1,"mobile","a mobile");
+		Product product =  new Product(1,"Google Pixel",60000.0,1,"mobile","a mobile","img");
 		productRepository.save(product);
 		product.setDescription("a good one");
 		productRepository.save(product);
@@ -106,14 +115,14 @@ class ProductApplicationTests {
 	
 	@Test
 	void testfindByProductId() {
-		Product product =  new Product(1,"Google Pixel",60000.0,1,"mobile","a mobile");
+		Product product =  new Product(1,"Google Pixel",60000.0,1,"mobile","a mobile","img");
 		Mockito.when(productRepository.findByProductId(1)).thenReturn(product);
 		assertEquals(product, productService.getProductById(1));
 	}
 	
 	@Test
 	void testdeleteProductById() {
-		Product product =  new Product(1,"Google Pixel",60000.0,1,"mobile","a mobile");
+		Product product =  new Product(1,"Google Pixel",60000.0,1,"mobile","a mobile","img");
 		assertEquals("Product deleted", productService.deleteProductById(1));
 	}
 	
