@@ -3,21 +3,28 @@ package com.example.demo.model;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
+import io.swagger.annotations.ApiModelProperty;
+
 
 
 @Entity
 public class Product {
 	
 	@Id
+	@ApiModelProperty(notes="The unique Id of contact")
 	private int productId;
+	@ApiModelProperty(notes="the name of product")
 	private String productName;
+	@ApiModelProperty(notes="Price of product")
 	private double price;
+	@ApiModelProperty(notes="available")
 	private int quantity;
 	private String productType;
 	private String description;
+	private String image;
 	
 	public Product(int productId, String productName, double price, int quantity, String productType,
-			String description) {
+			String description, String image) {
 		
 		this.productId = productId;
 		this.productName = productName;
@@ -25,6 +32,7 @@ public class Product {
 		this.quantity = quantity;
 		this.productType = productType;
 		this.description = description;
+		this.setImage(image);
 	}
 	public int getProductId() {
 		return productId;
@@ -63,8 +71,15 @@ public class Product {
 	public void setDescription(String description) {
 		this.description = description;
 	}
+	
 	public Product() {
 		
+	}
+	public String getImage() {
+		return image;
+	}
+	public void setImage(String image) {
+		this.image = image;
 	}
 	
 
