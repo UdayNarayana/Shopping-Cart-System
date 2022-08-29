@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.eshopping.profile.model.AuthenticationRequest;
+import com.eshopping.profile.model.AuthenticationResponse;
 import com.eshopping.profile.model.User;
 import com.eshopping.profile.service.UserService;
 
@@ -27,9 +29,9 @@ public class UserController {
 		return userService.registerUser(user);
 	}
 	
-	@GetMapping("/login")
-	public String getLoginMessage() {
-		return "Successfully logged in!";
+	@PostMapping("/login")
+	public AuthenticationResponse getLoginMessage(@RequestBody AuthenticationRequest authenticationRequest) {
+		return userService.login(authenticationRequest);
 	}
 	
 	@GetMapping("/get-all-user")

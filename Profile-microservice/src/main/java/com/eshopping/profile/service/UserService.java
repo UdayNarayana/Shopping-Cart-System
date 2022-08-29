@@ -3,6 +3,11 @@ package com.eshopping.profile.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -10,8 +15,11 @@ import com.eshopping.profile.exception.DuplicateUsernameException;
 import com.eshopping.profile.exception.InvalidEmailFormatException;
 import com.eshopping.profile.exception.InvalidPasswordFormatException;
 import com.eshopping.profile.exception.InvalidUsernameFormatException;
+import com.eshopping.profile.model.AuthenticationRequest;
+import com.eshopping.profile.model.AuthenticationResponse;
 import com.eshopping.profile.model.User;
 import com.eshopping.profile.repository.UserRepository;
+import com.eshopping.profile.util.JwtUtil;
 
 @Service
 public class UserService {
@@ -21,6 +29,16 @@ public class UserService {
 	
 	@Autowired
 	private BCryptPasswordEncoder bCryptPasswordEncoder;
+	
+	@Autowired
+	private CustomUserDetailsService customUserDetailsService;
+	
+	@Autowired
+	private AuthenticationManager authenticationManager;
+
+	@Autowired
+	private JwtUtil jwtTokenUtil;
+
 	
 	public List<User> getAllUsers(){
 		return userRepository.findAll();
@@ -61,6 +79,24 @@ public class UserService {
 		}
 		
 		return userRepository.save(user);
+	}
+	
+	public AuthenticationResponse login(AuthenticationRequest authenticationRequest) {
+		try {
+			authenticationManager.authenticate(
+					new UsernamePasswordAuthenticationToken(authenticationRequest.getUsername(), authenticationRequest.getPassword())
+			);
+		}
+		catch (BadCredentialsException e) {
+			throw new BadCredentialsException("Incorrect username or password", e);
+		}
+
+		final UserDetails userDetails = customUserDetailsService
+				.loadUserByUsername(authenticationRequest.getUsername());
+
+		final String jwt = jwtTokenUtil.generateToken(userDetails);
+
+		return new AuthenticationResponse(jwt);
 	}
 	
 	public User updateUser(User user) {
