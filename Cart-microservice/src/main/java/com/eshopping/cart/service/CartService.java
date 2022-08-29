@@ -19,6 +19,7 @@ public class CartService {
 	private ItemService itemService;
 	
 	public Cart createCart(Cart cart) {
+		cart.setTotalAmount(getTotalAmount());
 		return cartRepository.save(cart);
 	}
 	

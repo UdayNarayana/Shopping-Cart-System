@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.eshopping.profile.model.User;
-import com.eshopping.profile.repository.UserRepository;
 import com.eshopping.profile.service.UserService;
 
 @RestController
@@ -23,12 +22,6 @@ public class UserController {
 	@Autowired
 	private UserService userService;
 	
-	@Autowired
-	private UserRepository userRepository;
-	
-//	@Autowired
-//	private BCryptPasswordEncoder bCryptPasswordEncoder;
-	
 	@PostMapping("/register-user")
 	public User registerUser(@RequestBody User user) {
 		return userService.registerUser(user);
@@ -37,12 +30,6 @@ public class UserController {
 	@GetMapping("/login")
 	public String getLoginMessage() {
 		return "Successfully logged in!";
-	}
-	
-	@GetMapping("/get-username/{username}")
-	public String getByUsername(@PathVariable("username") String username) {
-		 User user = userRepository.findByUsername(username);
-		 return user.getPassword();
 	}
 	
 	@GetMapping("/get-all-user")
@@ -55,14 +42,9 @@ public class UserController {
 		return userService.getUserByUserId(userId);
 	}
 	
-	@GetMapping("/get-user-by-mobileNumber/{mobileNumber}")
-	public User getUserByNumber(@PathVariable("mobileNumber") long mobileNumber) {
-		return userService.getUserByMobileNumber(mobileNumber);
-	}
-	
-	@GetMapping("/get-users-by-fullName/{fullName}")
-	public User getUserByFullName(@PathVariable("fullName") String fullName){
-		return userService.getUserByFullName(fullName);
+	@GetMapping("/get-user-by-username/{username}")
+	public User getUserByUsername(@PathVariable("username") String username) {
+		return userService.getUserByUsername(username);
 	}
 	
 	@PutMapping("/update-user")

@@ -32,4 +32,12 @@ public class GlobalExceptionHandler  {
 				LocalDateTime.now());
 		return new ResponseEntity<>(error,org.springframework.http.HttpStatus.NOT_ACCEPTABLE);
 	}
+	
+	@ExceptionHandler(InvalidUsernameFormatException.class)
+	public ResponseEntity<ErrorDetails> handleInvalidUsernameException(InvalidUsernameFormatException ex) {
+		ErrorDetails error = new ErrorDetails(
+				ex.getMessage(), 
+				LocalDateTime.now());
+		return new ResponseEntity<>(error,org.springframework.http.HttpStatus.NOT_ACCEPTABLE);
+	}
 }
