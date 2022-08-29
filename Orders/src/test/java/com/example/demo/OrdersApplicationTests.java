@@ -13,6 +13,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 
 import com.example.demo.Repository.AddressRepository;
 import com.example.demo.Repository.OrderRepository;
+import com.example.demo.model.Address;
 import com.example.demo.model.Orders;
 import com.example.demo.service.OrderService;
 
@@ -153,6 +154,102 @@ class OrdersApplicationTests {
 	@Test
 	void testDeleteAllOrder() {
 		assertEquals("orders-deleted", orderService.deleteOrder());
+	}
+	@Test
+	void testaddAddress() {
+		Address address =  new Address(2345,"chetan","9701637322",8,"banglore",560037,"andhra");
+		Mockito.when(addressRepository.save(address)).thenReturn(address);
+		assertEquals(address, orderService.addAddress(address));
+	}
+	@Test
+	void testgetallAddress() {
+		Mockito.when(addressRepository.findAll()).thenReturn(Stream.of(
+				new Address(2345,"chetan","9701637322",8,"banglore",560037,"andhra"),
+				new Address(2358,"chetan","9701637322",8,"banglore",560037,"andhra"))
+				.collect(Collectors.toList()));	
+	
+		assertEquals(2,orderService.getAllAddress().size());
+	}
+	@Test
+	void testupdateAddress() {
+		Address address =  new Address(2345,"chetan","9701638466",8,"banglore",560037,"andhra");
+		Mockito.when(addressRepository.save(address)).thenReturn(address);
+		assertEquals(address, orderService.updateAddress(address));
+		
+	}
+	@Test
+	void testUpdateAddress1() {
+		Address address =  new Address(2345,"chetan","9701638466",8,"banglore",560037,"andhra");
+		addressRepository.save(address);
+		
+		address.setCustomerId(1);
+		addressRepository.save(address);
+		
+		assertEquals(1, address.getCustomerId());
+	}
+	@Test
+	void testUpdateAddress2() {
+		Address address =  new Address(2345,"chetan","9701638466",8,"banglore",560037,"andhra");
+		addressRepository.save(address);
+		
+		address.setFullname("reddy");
+		addressRepository.save(address);
+		
+		assertEquals("reddy", address.getFullname());
+	}
+	@Test
+	void testUpdateAddress3() {
+		Address address =  new Address(2345,"chetan","9701638466",8,"banglore",560037,"andhra");
+		addressRepository.save(address);
+		
+		address.setMobileNumber("9701659764");
+		addressRepository.save(address);
+		
+		assertEquals("9701659764", address.getMobileNumber());
+	}
+	@Test
+	void testUpdateAddress4() {
+		Address address =  new Address(2345,"chetan","9701638466",8,"banglore",560037,"andhra");
+		addressRepository.save(address);
+		
+		address.setFlatNumber(9);
+		addressRepository.save(address);
+		
+		assertEquals(9, address.getFlatNumber());
+	}
+	@Test
+	void testUpdateAddress5() {
+		Address address =  new Address(2345,"chetan","9701638466",8,"banglore",560037,"andhra");
+		addressRepository.save(address);
+		
+		address.setCity("nellore");
+		addressRepository.save(address);
+		
+		assertEquals("nellore", address.getCity());
+	}
+	@Test
+	void testUpdateAddress6() {
+		Address address =  new Address(2345,"chetan","9701638466",8,"banglore",560037,"andhra");
+		addressRepository.save(address);
+		
+		address.setPincode(560037);
+		addressRepository.save(address);
+		
+		assertEquals(560037, address.getPincode());
+	}
+	@Test
+	void testUpdateAddress7() {
+		Address address =  new Address(2345,"chetan","9701638466",8,"banglore",560037,"andhra");
+		addressRepository.save(address);
+		
+		address.setState("telangana");
+		addressRepository.save(address);
+		
+		assertEquals("telangana", address.getState());
+	}
+	@Test
+	void testDeleteAddress() {
+		assertEquals("address-deleted", orderService.deleteAddress());
 	}
 
 }
