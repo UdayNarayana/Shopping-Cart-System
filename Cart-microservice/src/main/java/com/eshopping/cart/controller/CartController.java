@@ -11,10 +11,12 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.RestTemplate;
 
 import com.eshopping.cart.model.Cart;
 import com.eshopping.cart.model.CartItems;
 import com.eshopping.cart.model.Items;
+import com.eshopping.cart.model.Product;
 import com.eshopping.cart.service.CartService;
 import com.eshopping.cart.service.ItemService;
 
@@ -79,9 +81,8 @@ public class CartController {
 			)
 	public Items addItemToCart(@RequestBody Items items,
 							  @PathVariable("itemId") int itemId) {
-		items.setCartId(cart.getCartId());
-		items.setItemId(itemId);
-		return itemService.addItemToCart(items);
+//		items.setCartId(cart.getCartId());
+		return itemService.addItemToCart(items,itemId,cart.getCartId());
 	}
 	
 	@PutMapping("/update-item")

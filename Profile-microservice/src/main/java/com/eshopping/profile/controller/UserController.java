@@ -34,6 +34,11 @@ public class UserController {
 		return userService.login(authenticationRequest);
 	}
 	
+	@GetMapping("/welcome")
+	public String welcome() {
+		return "<h1>Welcome to EShopping Zone</h1>";
+	}
+	
 	@GetMapping("/get-all-user")
 	public List<User> getAllUsers(){
 		return userService.getAllUsers();
