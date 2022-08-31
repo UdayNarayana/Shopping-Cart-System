@@ -3,14 +3,13 @@ package com.eshopping.profile.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.mail.SimpleMailMessage;
-import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
 import com.eshopping.profile.exception.DuplicateUsernameException;
 import com.eshopping.profile.exception.InvalidEmailFormatException;
@@ -18,6 +17,7 @@ import com.eshopping.profile.exception.InvalidPasswordFormatException;
 import com.eshopping.profile.exception.InvalidUsernameFormatException;
 import com.eshopping.profile.model.AuthenticationRequest;
 import com.eshopping.profile.model.AuthenticationResponse;
+import com.eshopping.profile.model.EmailBody;
 import com.eshopping.profile.model.User;
 import com.eshopping.profile.repository.UserRepository;
 import com.eshopping.profile.util.JwtUtil;
@@ -41,8 +41,9 @@ public class UserService {
 	private JwtUtil jwtTokenUtil;
 	
 	@Autowired
-	private JavaMailSender mailSender;
+	private RestTemplate restTemplate;
 	
+	private static final String EMAIL_URL = "http://EMAIL-MICROSERVICE/email/send-mail";
 	private static final String EMAIL_FORMAT = "[a-z0-9]+@[a-z]+\\.[a-z]{2,3}";
 	private static final String PASSWORD_FORMAT = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,20}$";
 	private static final String USERNAME_FORMAT = "^(?=[a-zA-Z0-9._]{3,20}$)(?!.*[_.]{2})[^_.].*[^_.]$";
@@ -59,20 +60,7 @@ public class UserService {
 		return userRepository.findByUsername(username);
 	}
 	
-	public void sendEmail(String toEmail,
-						  String body,
-						  String subject) {
-		SimpleMailMessage message = new SimpleMailMessage();
-		
-		message.setFrom("eshopping.in.official@gmail.com");
-		message.setTo(toEmail);
-		message.setText(body);
-		message.setSubject(subject);
-		
-		mailSender.send(message);
-	}
-	
-	public User registerUser(User user) {
+	public String registerUser(User user) {
 		
 		if(!user.getEmailId().matches(EMAIL_FORMAT)){
 			throw new InvalidEmailFormatException("Invalid email format.");
@@ -96,7 +84,9 @@ public class UserService {
 			throw new DuplicateUsernameException("Username already exists please try again");
 		}
 		
-		String emailBody = "Dear "+user.getUsername()+",\n\n"+
+		String username = user.getUsername();
+		
+		String emailBody = "Dear "+username+",\n\n"+
 				  "Welcome to EShopping Zone, you've been successfully registered.\n"+
 				  "You can now login and begin shopping at" 
 				  + " http://localhost:8020/user/welcome\n\n"+
@@ -105,8 +95,18 @@ public class UserService {
 		
 		String emailSubject = "Account Registration Confirmation";
 		
-		sendEmail(user.getEmailId(), emailBody, emailSubject);
-		return userRepository.save(user);
+		EmailBody mail = new EmailBody(
+				user.getUsername(),
+				user.getEmailId(),
+				emailSubject, 
+				emailBody
+				);
+		
+		userRepository.save(user);
+		
+	    restTemplate.postForObject(EMAIL_URL, mail, String.class);
+		 
+		return "User successfully registered";
 		
 	}
 	
