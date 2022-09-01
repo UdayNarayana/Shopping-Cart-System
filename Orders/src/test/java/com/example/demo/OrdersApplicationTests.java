@@ -31,28 +31,28 @@ class OrdersApplicationTests {
 
 	@Test
 	void testplaceOrder() {
-		Orders order =  new Orders(1,10,24.0,"cod","shipping",1);
+		Orders order =  new Orders(1,10,24.0,"cod","shipping");
 		Mockito.when(orderRepository.save(order)).thenReturn(order);
 		assertEquals(order, orderService.placeOrder(order));
 		
 	}
 	@Test
 	void testplaceOrder1() {
-		Orders order =  new Orders(1,10,50.0,"e-wallet","shipping",234);
+		Orders order =  new Orders(1,10,50.0,"e-wallet","shipping");
 		Mockito.when(orderRepository.save(order)).thenReturn(order);
 		assertEquals(order, orderService.placeOrder(order));
 		
 	}
 	@Test
 	void testplaceOrder2() {
-		Orders order =  new Orders(2345,85,753,"cod","placed",8);
+		Orders order =  new Orders(2345,85,753,"cod","placed");
 		Mockito.when(orderRepository.save(order)).thenReturn(order);
 		assertEquals(order, orderService.placeOrder(order));
 		
 	}
 	@Test
 	void testplaceOrder3() {
-		Orders order =  new Orders(2345,85,753,"e-wallet","cancelled",8);
+		Orders order =  new Orders(2345,85,753,"e-wallet","cancelled");
 		Mockito.when(orderRepository.save(order)).thenReturn(order);
 		assertEquals(order, orderService.placeOrder(order));
 		
@@ -60,8 +60,8 @@ class OrdersApplicationTests {
 	@Test
 	void testgetallorders() {
 		Mockito.when(orderRepository.findAll()).thenReturn(Stream.of(
-				new Orders(1,10,24.0,"cod","shipping",1),
-				new Orders(1,20,500.0,"e-wallet","placed",5))
+				new Orders(1,10,24.0,"cod","shipping"),
+				new Orders(1,20,500.0,"e-wallet","placed"))
 				.collect(Collectors.toList()));	
 	
 		assertEquals(2,orderService.getAllOrders().size());
@@ -69,8 +69,8 @@ class OrdersApplicationTests {
 	@Test
 	void testgetallorders1() {
 		Mockito.when(orderRepository.findAll()).thenReturn(Stream.of(
-				new Orders(1,10,24.0,"cod","shipping",1),
-				new Orders(2345,85,753,"e-wallet","cancelled",8))
+				new Orders(1,10,24.0,"cod","shipping"),
+				new Orders(2345,85,753,"e-wallet","cancelled"))
 				.collect(Collectors.toList()));	
 	
 		assertEquals(2,orderService.getAllOrders().size());
@@ -78,22 +78,22 @@ class OrdersApplicationTests {
 	@Test
 	void testgetallorders2() {
 		Mockito.when(orderRepository.findAll()).thenReturn(Stream.of(
-				new Orders(1,10,50.0,"e-wallet","shipping",234),
-				new Orders(2345,85,753,"e-wallet","cancelled",8))
+				new Orders(1,10,50.0,"e-wallet","shipping"),
+				new Orders(2345,85,753,"e-wallet","cancelled"))
 				.collect(Collectors.toList()));	
 	
 		assertEquals(2,orderService.getAllOrders().size());
 	}
 	@Test
 	void testupdateOrder3() {
-		Orders order =  new Orders(567,85,753,"e-wallet","cancelled",8);
+		Orders order =  new Orders(567,85,753,"e-wallet","cancelled");
 		Mockito.when(orderRepository.save(order)).thenReturn(order);
 		assertEquals(order, orderService.updateOrder(order));
 		
 	}
 	@Test
 	void testUpdateOrder() {
-		Orders order =  new Orders(2345,85,753,"e-wallet","cancelled",8);
+		Orders order =  new Orders(2345,85,753,"e-wallet","cancelled");
 		orderRepository.save(order);
 		
 		order.setOrderStatus("placed");
@@ -103,7 +103,7 @@ class OrdersApplicationTests {
 	}
 	@Test
 	void testUpdateOrder1() {
-		Orders order =  new Orders(1,10,24.0,"e-wallet","shipping",1);
+		Orders order =  new Orders(1,10,24.0,"e-wallet","shipping");
 		orderRepository.save(order);
 		
 		order.setModeOfPayment("cod");
@@ -112,18 +112,8 @@ class OrdersApplicationTests {
 		assertEquals("cod", order.getModeOfPayment());
 	}
 	@Test
-	void testUpdateOrder2() {
-		Orders order =  new Orders(1,10,24.0,"e-wallet","shipping",1);
-		orderRepository.save(order);
-		
-		order.setQuantity(5);
-		orderRepository.save(order);
-		
-		assertEquals(5, order.getQuantity());
-	}
-	@Test
 	void testUpdateOrder4() {
-		Orders order =  new Orders(1,10,24.0,"e-wallet","shipping",1);
+		Orders order =  new Orders(1,10,24.0,"e-wallet","shipping");
 		orderRepository.save(order);
 		
 		order.setAmountPaid(500.0);
@@ -133,7 +123,7 @@ class OrdersApplicationTests {
 	}
 	@Test
 	void testUpdateOrder5() {
-		Orders order =  new Orders(1,10,24.0,"e-wallet","shipping",1);
+		Orders order =  new Orders(1,10,24.0,"e-wallet","shipping");
 		orderRepository.save(order);
 		
 		order.setCustomerId(534);
@@ -143,7 +133,7 @@ class OrdersApplicationTests {
 	}
 	@Test
 	void testUpdateOrder6() {
-		Orders order =  new Orders(1,10,24.0,"e-wallet","shipping",1);
+		Orders order =  new Orders(1,10,24.0,"e-wallet","shipping");
 		orderRepository.save(order);
 		
 		order.setOrderId(453);
@@ -157,29 +147,29 @@ class OrdersApplicationTests {
 	}
 	@Test
 	void testaddAddress() {
-		Address address =  new Address(2345,"chetan","9701637322",8,"banglore",560037,"andhra");
+		Address address =  new Address(1,2345,"chetan","9701637322",8,"banglore",560037,"andhra");
 		Mockito.when(addressRepository.save(address)).thenReturn(address);
 		assertEquals(address, orderService.addAddress(address));
 	}
 	@Test
 	void testgetallAddress() {
 		Mockito.when(addressRepository.findAll()).thenReturn(Stream.of(
-				new Address(2345,"chetan","9701637322",8,"banglore",560037,"andhra"),
-				new Address(2358,"chetan","9701637322",8,"banglore",560037,"andhra"))
+				new Address(1,2345,"chetan","9701637322",8,"banglore",560037,"andhra"),
+				new Address(2,2358,"chetan","9701637322",8,"banglore",560037,"andhra"))
 				.collect(Collectors.toList()));	
 	
 		assertEquals(2,orderService.getAllAddress().size());
 	}
 	@Test
 	void testupdateAddress() {
-		Address address =  new Address(2345,"chetan","9701638466",8,"banglore",560037,"andhra");
+		Address address =  new Address(3,2345,"chetan","9701638466",8,"banglore",560037,"andhra");
 		Mockito.when(addressRepository.save(address)).thenReturn(address);
 		assertEquals(address, orderService.updateAddress(address));
 		
 	}
 	@Test
 	void testUpdateAddress1() {
-		Address address =  new Address(2345,"chetan","9701638466",8,"banglore",560037,"andhra");
+		Address address =  new Address(4,2345,"chetan","9701638466",8,"banglore",560037,"andhra");
 		addressRepository.save(address);
 		
 		address.setCustomerId(1);
@@ -189,7 +179,7 @@ class OrdersApplicationTests {
 	}
 	@Test
 	void testUpdateAddress2() {
-		Address address =  new Address(2345,"chetan","9701638466",8,"banglore",560037,"andhra");
+		Address address =  new Address(7,2345,"chetan","9701638466",8,"banglore",560037,"andhra");
 		addressRepository.save(address);
 		
 		address.setFullname("reddy");
@@ -199,7 +189,7 @@ class OrdersApplicationTests {
 	}
 	@Test
 	void testUpdateAddress3() {
-		Address address =  new Address(2345,"chetan","9701638466",8,"banglore",560037,"andhra");
+		Address address =  new Address(11,2345,"chetan","9701638466",8,"banglore",560037,"andhra");
 		addressRepository.save(address);
 		
 		address.setMobileNumber("9701659764");
@@ -209,7 +199,7 @@ class OrdersApplicationTests {
 	}
 	@Test
 	void testUpdateAddress4() {
-		Address address =  new Address(2345,"chetan","9701638466",8,"banglore",560037,"andhra");
+		Address address =  new Address(13,2345,"chetan","9701638466",8,"banglore",560037,"andhra");
 		addressRepository.save(address);
 		
 		address.setFlatNumber(9);
@@ -219,7 +209,7 @@ class OrdersApplicationTests {
 	}
 	@Test
 	void testUpdateAddress5() {
-		Address address =  new Address(2345,"chetan","9701638466",8,"banglore",560037,"andhra");
+		Address address =  new Address(16,2345,"chetan","9701638466",8,"banglore",560037,"andhra");
 		addressRepository.save(address);
 		
 		address.setCity("nellore");
@@ -229,7 +219,7 @@ class OrdersApplicationTests {
 	}
 	@Test
 	void testUpdateAddress6() {
-		Address address =  new Address(2345,"chetan","9701638466",8,"banglore",560037,"andhra");
+		Address address =  new Address(19,2345,"chetan","9701638466",8,"banglore",560037,"andhra");
 		addressRepository.save(address);
 		
 		address.setPincode(560037);
@@ -239,13 +229,22 @@ class OrdersApplicationTests {
 	}
 	@Test
 	void testUpdateAddress7() {
-		Address address =  new Address(2345,"chetan","9701638466",8,"banglore",560037,"andhra");
+		Address address =  new Address(22,2345,"chetan","9701638466",8,"banglore",560037,"andhra");
 		addressRepository.save(address);
 		
 		address.setState("telangana");
 		addressRepository.save(address);
 		
 		assertEquals("telangana", address.getState());
+	}
+	void testUpdateAddress8() {
+		Address address =  new Address(22,2345,"chetan","9701638466",8,"banglore",560037,"andhra");
+		addressRepository.save(address);
+		
+		address.setAddressId(12);
+		addressRepository.save(address);
+		
+		assertEquals(12, address.getAddressId());
 	}
 	@Test
 	void testDeleteAddress() {

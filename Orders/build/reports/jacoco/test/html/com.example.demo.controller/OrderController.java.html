@@ -17,51 +17,52 @@ import com.example.demo.service.OrderService;
 
 
 @RestController
-@RequestMapping(&quot;/orders&quot;)
+@RequestMapping(&quot;/api&quot;)
 
-<span class="fc" id="L22">public class OrderController {</span>
+
+<span class="fc" id="L23">public class OrderController {</span>
 	
 	@Autowired
 	OrderService orderService;
 	
 	@GetMapping(&quot;/getallorders&quot;)
 	public List&lt;Orders&gt; getAllOrders(){
-<span class="nc" id="L29">		return orderService.getAllOrders();</span>
+<span class="nc" id="L30">		return orderService.getAllOrders();</span>
 		
 	}
 	@GetMapping(&quot;/getalladdress&quot;)
 	public List&lt;Address&gt; getAllAddress(){
-<span class="nc" id="L34">		return orderService.getAllAddress();</span>
+<span class="nc" id="L35">		return orderService.getAllAddress();</span>
 		
 	}
 	@PostMapping(&quot;/placeorder&quot;)
 	public Orders placeOrder(@RequestBody Orders order){
-<span class="nc" id="L39">		return orderService.placeOrder(order);</span>
+<span class="nc" id="L40">		return orderService.placeOrder(order);</span>
 		
 	}
 	@PutMapping(&quot;/updateorder&quot;)
 	public Orders updateOrder(@RequestBody Orders order){
-<span class="nc" id="L44">		return orderService.updateOrder(order);</span>
+<span class="nc" id="L45">		return orderService.updateOrder(order);</span>
 		
 	}
 	@DeleteMapping(&quot;/deleteorder&quot;)
 	public String deleteOrder(){
-<span class="nc" id="L49">		return orderService.deleteOrder();</span>
+<span class="nc" id="L50">		return orderService.deleteOrder();</span>
 		
 	}
 	@PostMapping(&quot;/addAddress&quot;)
 	public Address addAddress(@RequestBody Address address){
-<span class="nc" id="L54">		return orderService.addAddress(address);</span>
+<span class="nc" id="L55">		return orderService.addAddress(address);</span>
 		
 	}
 	@PutMapping(&quot;/updateAddress&quot;)
 	public Address updateAddress(@RequestBody Address address){
-<span class="nc" id="L59">		return orderService.updateAddress(address);</span>
+<span class="nc" id="L60">		return orderService.updateAddress(address);</span>
 		
 	}
 	@DeleteMapping(&quot;/deleteAddress&quot;)
 	public String deleteAddress(){
-<span class="nc" id="L64">		return orderService.deleteAddress();</span>
+<span class="nc" id="L65">		return orderService.deleteAddress();</span>
 		
 	}
 	 

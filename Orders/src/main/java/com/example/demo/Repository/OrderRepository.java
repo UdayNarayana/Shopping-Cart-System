@@ -8,5 +8,6 @@ import com.example.demo.model.Orders;
 @Repository
 
 public interface OrderRepository extends JpaRepository<Orders, Integer> {
+	
 
 }

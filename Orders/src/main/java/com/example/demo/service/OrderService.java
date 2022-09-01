@@ -7,10 +7,12 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+
 import com.example.demo.Repository.AddressRepository;
 import com.example.demo.Repository.OrderRepository;
 import com.example.demo.model.Address;
 import com.example.demo.model.Orders;
+
 @Service
 public class OrderService {
 	
@@ -22,6 +24,9 @@ public class OrderService {
 
 	public List<Orders> getAllOrders() {
 		return orderRepository.findAll();
+	}
+	public List<Address> getAllOrderAddress() {
+		return addressRepository.findAll();
 	}
 	public Orders placeOrder(Orders order) {
 		return orderRepository.save(order);

@@ -11,20 +11,17 @@ public class Orders {
 	private double amountPaid;
 	private String modeOfPayment;
 	private String orderStatus;
-	private int quantity;
 
 
 	public Orders() {
 		
 	}
-	public Orders(int orderId, int customerId, double amountPaid, String modeOfPayment, String orderStatus,
-			int quantity) {
+	public Orders(int orderId, int customerId, double amountPaid, String modeOfPayment, String orderStatus) {
 		this.orderId = orderId;
 		this.customerId = customerId;
 		this.amountPaid = amountPaid;
 		this.modeOfPayment = modeOfPayment;
 		this.orderStatus = orderStatus;
-		this.quantity = quantity;
 	}
 	public int getOrderId() {
 		return orderId;
@@ -55,12 +52,6 @@ public class Orders {
 	}
 	public void setOrderStatus(String orderStatus) {
 		this.orderStatus = orderStatus;
-	}
-	public int getQuantity() {
-		return quantity;
-	}
-	public void setQuantity(int quantity) {
-		this.quantity = quantity;
 	}
 	
 
