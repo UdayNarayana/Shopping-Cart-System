@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.eshopping.cart.model.Cart;
 import com.eshopping.cart.model.CartItems;
 import com.eshopping.cart.model.Items;
+import com.eshopping.cart.model.MessageListener;
+import com.eshopping.cart.model.Product;
 import com.eshopping.cart.service.CartService;
 import com.eshopping.cart.service.ItemService;
 
@@ -62,6 +64,12 @@ public class CartController {
 							 cartService.getTotalAmount());
 	}
 	
+//	@GetMapping("/get-message-producer")
+//	public Product getMessageFromProducer() {
+//		MessageListener message = new MessageListener();
+//		return message.listener(getMessageFromProducer());
+//	}
+	
 	@PostMapping("/create-cart")
 	@ApiOperation(
 			value = "Creates a cart with an Id and total amount set to 0.0",
@@ -83,7 +91,7 @@ public class CartController {
 		return itemService.addItemToCart(items,itemId,cart.getCartId());
 	}
 	
-	@PutMapping("/update-item")
+	@PutMapping("/update-quantity")
 	@ApiOperation(
 			value = "Updates the quantity of the item in the cart",
 			response = Items.class
@@ -110,6 +118,5 @@ public class CartController {
 	public String deleteCartItems() {
 		return itemService.deleteAllItems();
 	}
-	
 	
 }

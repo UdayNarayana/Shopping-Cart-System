@@ -17,6 +17,7 @@ import com.eshopping.profile.exception.InvalidPasswordFormatException;
 import com.eshopping.profile.exception.InvalidUsernameFormatException;
 import com.eshopping.profile.model.AuthenticationRequest;
 import com.eshopping.profile.model.AuthenticationResponse;
+import com.eshopping.profile.model.Cart;
 import com.eshopping.profile.model.EmailBody;
 import com.eshopping.profile.model.User;
 import com.eshopping.profile.repository.UserRepository;
@@ -44,6 +45,7 @@ public class UserService {
 	private RestTemplate restTemplate;
 	
 	private static final String EMAIL_URL = "http://EMAIL-MICROSERVICE/email/send-mail";
+	private static final String CART_URL = "http://CART-MICROSERVICE/cart/create-cart";
 	private static final String EMAIL_FORMAT = "[a-z0-9]+@[a-z]+\\.[a-z]{2,3}";
 	private static final String PASSWORD_FORMAT = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,20}$";
 	private static final String USERNAME_FORMAT = "^(?=[a-zA-Z0-9._]{3,20}$)(?!.*[_.]{2})[^_.].*[^_.]$";
@@ -104,7 +106,7 @@ public class UserService {
 		
 		userRepository.save(user);
 		
-	    restTemplate.postForObject(EMAIL_URL, mail, String.class);
+//	    restTemplate.postForObject(EMAIL_URL, mail, String.class);
 		 
 		return "User successfully registered";
 		
@@ -126,6 +128,15 @@ public class UserService {
 		final UserDetails userDetails = customUserDetailsService
 				.loadUserByUsername(authenticationRequest.getUsername());
 
+		User user = getUserByUsername(authenticationRequest.getUsername());
+		
+		if(user.getRole().equals("customer")) {
+		
+			restTemplate.postForObject(CART_URL, new Cart(), Cart.class);
+			System.out.println("Cart created");
+		
+		}
+		
 		final String jwt = jwtTokenUtil.generateToken(userDetails);
 
 		return new AuthenticationResponse(jwt);

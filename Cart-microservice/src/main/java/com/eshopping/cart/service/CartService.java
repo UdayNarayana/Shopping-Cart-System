@@ -19,7 +19,7 @@ public class CartService {
 	private ItemService itemService;
 	
 	public Cart createCart(Cart cart) {
-		cart.setTotalAmount(getTotalAmount());
+		cart.setTotalAmount(0.0);
 		return cartRepository.save(cart);
 	}
 	
@@ -35,6 +35,11 @@ public class CartService {
 		totalCost+=item.getQuantity() * item.getPrice();
 		}
 		return totalCost;
+	}
+	
+	public String deleteCart() {
+		cartRepository.deleteAll();
+		return "Cart deleted";
 	}
 	
 }

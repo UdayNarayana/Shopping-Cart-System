@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import com.eshopping.cart.exception.ProductNotFoundException;
 import com.eshopping.cart.model.Items;
 import com.eshopping.cart.model.Product;
 import com.eshopping.cart.repository.ItemRepository;
@@ -19,7 +20,12 @@ public class ItemService {
 	@Autowired
 	private RestTemplate restTemplate;
 	
-	private final static String PRODUCT_URL = "http://PRODUCT-MICROSERVICE/product/";
+//	@RabbitListener(queues = MQConfig.QUEUE)
+//    public void listener(Product product) {
+//        useProduct = product;
+//    }
+	
+	private static final String PRODUCT_URL = "http://PRODUCT-MICROSERVICE/product/";
 	
 	
 	public List<Items> getAllCartItems() {
@@ -31,11 +37,16 @@ public class ItemService {
 	}
 	
 	public Items addItemToCart(Items item,int itemId,int cartId) {
-		Product product = restTemplate.getForObject(PRODUCT_URL+"getbyid/"+itemId, Product.class);
+		Product product = restTemplate.getForObject(PRODUCT_URL+"getbyid/"+itemId,Product.class);
+		if(product==null) {
+			throw new ProductNotFoundException("Product not found");
+		}
 		item.setCartId(cartId);
 		item.setItemId(itemId);
 		item.setProductName(product.getProductName());
 		item.setPrice(product.getPrice());
+		item.setQuantity(1);
+		item.setImage(product.getImage());
 		return itemRepository.save(item);
 	}
 	
