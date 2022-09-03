@@ -12,9 +12,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.eshopping.profile.model.Address;
 import com.eshopping.profile.model.AuthenticationRequest;
 import com.eshopping.profile.model.AuthenticationResponse;
 import com.eshopping.profile.model.User;
+import com.eshopping.profile.model.UserInfo;
 import com.eshopping.profile.service.UserService;
 
 @RestController
@@ -34,6 +36,11 @@ public class UserController {
 		return userService.login(authenticationRequest);
 	}
 	
+	@PostMapping("/add-address")
+	public Address addAddress(@RequestBody Address address) {
+		return userService.addUserAddress(address);
+	}
+	
 	@GetMapping("/welcome")
 	public String welcome() {
 		return "<h1>Welcome to EShopping Zone</h1>";
@@ -45,13 +52,20 @@ public class UserController {
 	}
 	
 	@GetMapping("/get-user-by-id/{userId}")
-	public User getUserByid(@PathVariable("userId") int userId) {
-		return userService.getUserByUserId(userId);
+	public UserInfo getUserByid(@PathVariable("userId") int userId) {
+		User user = userService.getUserByUserId(userId);
+		List<Address> addressList = userService.getAddressByUserId(userId);
+		return new UserInfo(user,addressList);
 	}
 	
 	@GetMapping("/get-user-by-username/{username}")
 	public User getUserByUsername(@PathVariable("username") String username) {
 		return userService.getUserByUsername(username);
+	}
+	
+	@GetMapping("/get-address-by-userId/{userId}")
+	public List<Address> getAddresses(@PathVariable("userId") int userId){
+		return userService.getAddressByUserId(userId);
 	}
 	
 	@PutMapping("/update-user")

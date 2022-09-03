@@ -15,8 +15,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.eshopping.cart.model.Cart;
 import com.eshopping.cart.model.CartItems;
 import com.eshopping.cart.model.Items;
-import com.eshopping.cart.model.MessageListener;
-import com.eshopping.cart.model.Product;
 import com.eshopping.cart.service.CartService;
 import com.eshopping.cart.service.ItemService;
 

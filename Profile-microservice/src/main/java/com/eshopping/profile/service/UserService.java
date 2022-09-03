@@ -15,11 +15,13 @@ import com.eshopping.profile.exception.DuplicateUsernameException;
 import com.eshopping.profile.exception.InvalidEmailFormatException;
 import com.eshopping.profile.exception.InvalidPasswordFormatException;
 import com.eshopping.profile.exception.InvalidUsernameFormatException;
+import com.eshopping.profile.model.Address;
 import com.eshopping.profile.model.AuthenticationRequest;
 import com.eshopping.profile.model.AuthenticationResponse;
 import com.eshopping.profile.model.Cart;
 import com.eshopping.profile.model.EmailBody;
 import com.eshopping.profile.model.User;
+import com.eshopping.profile.repository.AddressRepository;
 import com.eshopping.profile.repository.UserRepository;
 import com.eshopping.profile.util.JwtUtil;
 
@@ -28,6 +30,9 @@ public class UserService {
 
 	@Autowired
 	private UserRepository userRepository;
+	
+	@Autowired
+	private AddressRepository addressRepository;
 	
 	@Autowired
 	private BCryptPasswordEncoder bCryptPasswordEncoder;
@@ -43,6 +48,8 @@ public class UserService {
 	
 	@Autowired
 	private RestTemplate restTemplate;
+	
+	private int userID;
 	
 	private static final String EMAIL_URL = "http://EMAIL-MICROSERVICE/email/send-mail";
 	private static final String CART_URL = "http://CART-MICROSERVICE/cart/create-cart";
@@ -104,12 +111,23 @@ public class UserService {
 				emailBody
 				);
 		
-		userRepository.save(user);
+		User someUser = userRepository.save(user);
+		
+		userID = someUser.getUserId();
 		
 //	    restTemplate.postForObject(EMAIL_URL, mail, String.class);
 		 
 		return "User successfully registered";
 		
+	}
+	
+	public Address addUserAddress(Address address) {
+		address.setUserId(userID);
+		return addressRepository.save(address);
+	}
+	
+	public List<Address> getAddressByUserId(int userId) {
+		return addressRepository.findByUserId(userId);
 	}
 	
 	public AuthenticationResponse login(AuthenticationRequest authenticationRequest) {
@@ -136,6 +154,8 @@ public class UserService {
 			System.out.println("Cart created");
 		
 		}
+		
+		userID = user.getUserId(); 
 		
 		final String jwt = jwtTokenUtil.generateToken(userDetails);
 
