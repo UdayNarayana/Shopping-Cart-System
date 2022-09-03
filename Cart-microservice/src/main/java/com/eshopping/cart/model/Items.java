@@ -34,6 +34,9 @@ public class Items {
 	@ApiModelProperty(notes = "The quantity of the item added in the cart")
 	private int quantity;
 	
+	@ApiModelProperty(notes = "The quantity of the item added in the cart")
+	private String availabilityStatus;
+	
 	@ApiModelProperty(notes = "The image of the item in the cart")
 	private String image;
 	
