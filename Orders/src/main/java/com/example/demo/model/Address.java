@@ -6,6 +6,7 @@ import javax.persistence.Id;
 @Entity
 public class Address {
 	@Id
+	private int addressId;
 	private int customerId;
 	private String fullname;
 	private String mobileNumber;
@@ -18,9 +19,11 @@ public class Address {
 	public Address (){
 		
 	}
-	public Address(int customerId, String fullname, String mobileNumber, int flatNumber, String city, int pincode,
-			String state) {
+	
+	public Address(int addressId, int customerId, String fullname, String mobileNumber, int flatNumber, String city,
+			int pincode, String state) {
 		super();
+		this.addressId = addressId;
 		this.customerId = customerId;
 		this.fullname = fullname;
 		this.mobileNumber = mobileNumber;
@@ -28,6 +31,13 @@ public class Address {
 		this.city = city;
 		this.pincode = pincode;
 		this.state = state;
+	}
+
+	public int getAddressId() {
+		return addressId;
+	}
+	public void setAddressId(int addressId) {
+		this.addressId = addressId;
 	}
 	public int getCustomerId() {
 		return customerId;

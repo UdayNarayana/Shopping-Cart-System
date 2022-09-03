@@ -1,16 +1,48 @@
 <?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>OrdersApplication.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Orders</a> &gt; <a href="index.source.html" class="el_package">com.example.demo</a> &gt; <span class="el_source">OrdersApplication.java</span></div><h1>OrdersApplication.java</h1><pre class="source lang-java linenums">package com.example.demo;
 
+import java.util.Collections;
+
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.Bean;
+
+import springfox.documentation.builders.PathSelectors;
+import springfox.documentation.builders.RequestHandlerSelectors;
+import springfox.documentation.service.ApiInfo;
+import springfox.documentation.spi.DocumentationType;
+import springfox.documentation.spring.web.plugins.Docket;
+import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 @SpringBootApplication
-<span class="fc" id="L7">public class OrdersApplication {</span>
+@EnableSwagger2
+<span class="fc" id="L18">public class OrdersApplication {</span>
 	
 	
 
 	public static void main(String[] args) {
-<span class="nc" id="L12">		SpringApplication.run(OrdersApplication.class, args);</span>
-<span class="nc" id="L13">	}</span>
+<span class="nc" id="L23">		SpringApplication.run(OrdersApplication.class, args);</span>
+<span class="nc" id="L24">	}</span>
+	
+	@Bean
+	public Docket swaggerConfiguration() {
+<span class="fc" id="L28">		return new Docket(DocumentationType.SWAGGER_2)</span>
+<span class="fc" id="L29">				.select()</span>
+<span class="fc" id="L30">				.paths(PathSelectors.ant(&quot;/api/*&quot;))</span>
+<span class="fc" id="L31">				.apis(RequestHandlerSelectors.basePackage(&quot;com.example.demo&quot;))</span>
+<span class="fc" id="L32">				.build()</span>
+<span class="fc" id="L33">				.apiInfo(apiDetails());</span>
+	}
+	
+		private ApiInfo apiDetails() {
+<span class="fc" id="L37">			return new ApiInfo(&quot;ORDERS API&quot;, </span>
+					&quot;ORDERS&quot;, 
+					&quot;1.0&quot;, 
+					&quot;FREE OF COST&quot;,
+					new springfox.documentation.service.Contact(&quot;CHETAN&quot;, &quot;localhost:8082/orders&quot;, &quot;sai@gmail.com&quot;), &quot;API License&quot;, 
+					&quot;localhost:8081/api/getproducts&quot;,
+<span class="fc" id="L43">					Collections.emptyList());</span>
+		
+	}
 
 
 }
