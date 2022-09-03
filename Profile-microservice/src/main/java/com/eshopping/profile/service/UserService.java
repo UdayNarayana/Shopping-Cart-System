@@ -2,6 +2,7 @@ package com.eshopping.profile.service;
 
 import java.util.List;
 
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -24,6 +25,7 @@ import com.eshopping.profile.model.User;
 import com.eshopping.profile.repository.AddressRepository;
 import com.eshopping.profile.repository.UserRepository;
 import com.eshopping.profile.util.JwtUtil;
+import com.eshopping.profile.util.MQConfig;
 
 @Service
 public class UserService {
@@ -48,6 +50,9 @@ public class UserService {
 	
 	@Autowired
 	private RestTemplate restTemplate;
+	
+	@Autowired
+    private RabbitTemplate template;
 	
 	private int userID;
 	
@@ -115,7 +120,13 @@ public class UserService {
 		
 		userID = someUser.getUserId();
 		
+		template.convertAndSend(MQConfig.EXCHANGE,
+                MQConfig.ROUTING_KEY, mail);
+		
 //	    restTemplate.postForObject(EMAIL_URL, mail, String.class);
+		
+		EmailBody email = new EmailBody();
+		restTemplate.postForObject(EMAIL_URL, email, String.class);
 		 
 		return "User successfully registered";
 		

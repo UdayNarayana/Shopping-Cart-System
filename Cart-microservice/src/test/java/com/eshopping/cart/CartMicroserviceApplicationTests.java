@@ -70,7 +70,7 @@ class CartMicroserviceApplicationTests {
 	
 	@Test
 	void testAddItemToCart() {
-		Items item =  new Items(1,10,"Google Pixel",60000.0,1,"http://image-link");
+		Items item =  new Items(1,10,"Google Pixel",60000.0,1,"In Stock","http://image-link");
 		Mockito.when(itemRepository.save(item)).thenReturn(item);
 		assertEquals(item, itemService.addItemToCart(item,10,1));
 	}
@@ -78,8 +78,8 @@ class CartMicroserviceApplicationTests {
 	@Test
 	void testGetAllCartItems() {
 		Mockito.when(itemRepository.findAll()).thenReturn(Stream.of(
-				new Items(1,10,"Google Pixel",60000.0,1,"http://image-link"),
-				new Items(1,20,"Pant",2000.0,1,"http://image-link"))
+				new Items(1,10,"Google Pixel",60000.0,1,"In Stock","http://image-link"),
+				new Items(1,20,"Pant",2000.0,1,"In Stock","http://image-link"))
 				.collect(Collectors.toList()));	
 	
 		assertEquals(2,itemService.getAllCartItems().size());
@@ -87,14 +87,14 @@ class CartMicroserviceApplicationTests {
 	
 	@Test
 	void testGetItemByItemId() {
-		Items item =  new Items(1,10,"Google Pixel",60000.0,1,"http://image-link");
+		Items item =  new Items(1,10,"Google Pixel",60000.0,1,"In Stock","http://image-link");
 		Mockito.when(itemRepository.findByItemId(1)).thenReturn(item);
 		assertEquals(item,itemService.getItemByItemId(1));
 	}
 	
 	@Test
 	void testUpdateCartItem() {
-		Items item =  new Items(1,10,"Google Pixel",60000.0,1,"http://image-link");
+		Items item =  new Items(1,10,"Google Pixel",60000.0,1,"In Stock","http://image-link");
 		
 		item.setProductName("One Plus 10T");
 		itemRepository.save(item);
@@ -122,8 +122,8 @@ class CartMicroserviceApplicationTests {
 	@Test
 	void testTotalAmount() {
 		Mockito.when(itemRepository.findAll()).thenReturn(Stream.of(
-				new Items(1,10,"item1",100.0,1,"http://image-link"),
-				new Items(1,20,"item2",200.0,1,"http://image-link"))
+				new Items(1,10,"item1",100.0,1,"In Stock","http://image-link"),
+				new Items(1,20,"item2",200.0,1,"In Stock","http://image-link"))
 				.collect(Collectors.toList()));
 		assertEquals(300.0, cartService.getTotalAmount());
 		
@@ -139,8 +139,8 @@ class CartMicroserviceApplicationTests {
 	void testCartItems() {
 		CartItems cartItem = new CartItems();
 		cartItem.setCartId(1);
-		List<Items> itemsList = Arrays.asList(new Items(1,10,"item1",60000.0,1,"http://image-link"),
-											  new Items(1,10,"item2",3000.0,1,"http://image-link"));
+		List<Items> itemsList = Arrays.asList(new Items(1,10,"item1",60000.0,1,"In Stock","http://image-link"),
+											  new Items(1,10,"item2",3000.0,1,"In Stock","http://image-link"));
 		cartItem.setItemList(itemsList);
 		cartItem.setTotalAmount(63000.0);
 		assertEquals(63000.0, cartItem.getTotalAmount());
@@ -150,8 +150,8 @@ class CartMicroserviceApplicationTests {
 	void testGetCartItems() {
 		CartItems cartItem = new CartItems();
 		cartItem.setCartId(1);
-		List<Items> itemsList = Arrays.asList(new Items(1,10,"item1",60000.0,1,"http://image-link"),
-											  new Items(1,10,"item2",3000.0,1,"http://image-link"));
+		List<Items> itemsList = Arrays.asList(new Items(1,10,"item1",60000.0,1,"In Stock","http://image-link"),
+											  new Items(1,10,"item2",3000.0,1,"In Stock","http://image-link"));
 		cartItem.setItemList(itemsList);
 		cartItem.setTotalAmount(63000.0);
 		CartItems cartItem2 = new CartItems(cartItem.getCartId(), cartItem.getItemList(), 63000.0);

@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import com.eshopping.cart.exception.DuplicateCartItemException;
 import com.eshopping.cart.exception.ProductNotFoundException;
 import com.eshopping.cart.model.Items;
 import com.eshopping.cart.model.Product;
@@ -41,6 +42,13 @@ public class ItemService {
 		if(product==null) {
 			throw new ProductNotFoundException("Product not found");
 		}
+		
+		itemRepository.findAll().stream().forEach(items->{
+			if(items.getItemId()==itemId) {
+				throw new DuplicateCartItemException("Item already exists in cart");
+			}
+		});
+		
 		item.setCartId(cartId);
 		item.setItemId(itemId);
 		item.setProductName(product.getProductName());

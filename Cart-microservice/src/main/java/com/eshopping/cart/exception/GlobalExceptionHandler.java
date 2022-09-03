@@ -16,5 +16,13 @@ public class GlobalExceptionHandler  {
 						LocalDateTime.now());
 		return new ResponseEntity<>(error,org.springframework.http.HttpStatus.NOT_ACCEPTABLE);
 	}
+	
+	@ExceptionHandler(DuplicateCartItemException.class)
+	public ResponseEntity<ErrorDetails> handleInvalidEmailFormat(DuplicateCartItemException ex) {
+		ErrorDetails error = new ErrorDetails(
+						ex.getMessage(), 
+						LocalDateTime.now());
+		return new ResponseEntity<>(error,org.springframework.http.HttpStatus.NOT_ACCEPTABLE);
+	}
 
 }
