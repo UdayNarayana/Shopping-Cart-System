@@ -2,37 +2,20 @@ package com.example.demo.model;
 
 import java.util.List;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+@NoArgsConstructor
+@AllArgsConstructor
+@Setter
+@Getter
 public class CartItems {
-	public CartItems() {
-		
-	}
+
 	private int cartId;
 	private List<Items> itemList;
 	private double totalAmount;
-	public int getCartId() {
-		return cartId;
-	}
-	public void setCartId(int cartId) {
-		this.cartId = cartId;
-	}
-	public List<Items> getItemList() {
-		return itemList;
-	}
-	public void setItemList(List<Items> itemList) {
-		this.itemList = itemList;
-	}
-	public double getTotalAmount() {
-		return totalAmount;
-	}
-	public void setTotalAmount(double totalAmount) {
-		this.totalAmount = totalAmount;
-	}
-	public CartItems(int cartId, List<Items> itemList, double totalAmount) {
-		super();
-		this.cartId = cartId;
-		this.itemList = itemList;
-		this.totalAmount = totalAmount;
-	}
 	
 	
 }

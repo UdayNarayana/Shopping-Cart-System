@@ -125,8 +125,8 @@ public class UserService {
 		
 //	    restTemplate.postForObject(EMAIL_URL, mail, String.class);
 		
-		EmailBody email = new EmailBody();
-		restTemplate.postForObject(EMAIL_URL, email, String.class);
+//		EmailBody email = new EmailBody();
+//		restTemplate.postForObject(EMAIL_URL, email, String.class);
 		 
 		return "User successfully registered";
 		

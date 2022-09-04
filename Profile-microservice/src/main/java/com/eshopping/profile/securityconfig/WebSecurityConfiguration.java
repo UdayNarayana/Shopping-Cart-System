@@ -61,8 +61,8 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 				).hasAuthority("admin")
 		.antMatchers(
 				"/user/update-user",
-				"/user/delete-by-userId/{userId}",
-				"/user/get-user-by-id/{userId}"
+				"/user/delete-by-userId/{userId}"
+//				"/user/get-user-by-id/{userId}"
 				).hasAuthority("customer")
 //		.antMatchers("/user/login").hasAnyAuthority("customer","admin")
 		.antMatchers("/user/**").permitAll()

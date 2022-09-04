@@ -1,6 +1,5 @@
 package com.eshopping.email.controller;
 
-import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.SimpleMailMessage;
@@ -9,8 +8,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.eshopping.email.config.MQConfig;
 import com.eshopping.email.model.EmailBody;
+import com.eshopping.email.model.MessageListener;
 
 @RestController
 @RequestMapping("/email")
@@ -22,12 +21,10 @@ public class EmailController {
 	@Autowired
 	private JavaMailSender mailSender;
 	
-	EmailBody email = new EmailBody();
+	@Autowired
+	private MessageListener listener;
 	
-	@RabbitListener(queues = MQConfig.QUEUE)
-  public void listener(EmailBody mail) {
-      email = mail;
-  }
+//	EmailBody email = new EmailBody();
 	
 	public void sendEmail(String toEmail,
 			  String body,
@@ -42,12 +39,13 @@ public class EmailController {
 		mailSender.send(message);
 	}
 
+	
 	@PostMapping("/send-mail")
-	public String sendMail() {
+	public void sendMail() {
+		EmailBody email = listener.getEmail();
 		
 		sendEmail(email.getToMail(), email.getBody(), email.getSubject());
 		
-		return "Confirmation email sent successfully to "+email.getToMail();
 	}
 	
 }

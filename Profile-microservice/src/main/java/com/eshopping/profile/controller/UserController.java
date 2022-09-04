@@ -51,11 +51,16 @@ public class UserController {
 		return userService.getAllUsers();
 	}
 	
-	@GetMapping("/get-user-by-id/{userId}")
-	public UserInfo getUserByid(@PathVariable("userId") int userId) {
+	@GetMapping("/get-userInfo-by-id/{userId}")
+	public UserInfo getUserInfoByid(@PathVariable("userId") int userId) {
 		User user = userService.getUserByUserId(userId);
 		List<Address> addressList = userService.getAddressByUserId(userId);
 		return new UserInfo(user,addressList);
+	}
+	
+	@GetMapping("/get-user-by-id/{userId}")
+	public User getUserByid(@PathVariable("userId") int userId) {
+		return userService.getUserByUserId(userId);
 	}
 	
 	@GetMapping("/get-user-by-username/{username}")

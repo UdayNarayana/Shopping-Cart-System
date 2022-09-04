@@ -1,85 +1,22 @@
 package com.example.demo.model;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-@Entity
+@NoArgsConstructor
+@AllArgsConstructor
+@Setter
+@Getter
 public class Address {
-	@Id
+
 	private int addressId;
-	private int customerId;
-	private String fullname;
-	private String mobileNumber;
-	private int flatNumber;
+	private int userId;
+	private String locality;
 	private String city;
-	private int pincode;
 	private String state;
+	private String country;
+	private long pincode;
 	
-	
-	public Address (){
-		
-	}
-	
-	public Address(int addressId, int customerId, String fullname, String mobileNumber, int flatNumber, String city,
-			int pincode, String state) {
-		super();
-		this.addressId = addressId;
-		this.customerId = customerId;
-		this.fullname = fullname;
-		this.mobileNumber = mobileNumber;
-		this.flatNumber = flatNumber;
-		this.city = city;
-		this.pincode = pincode;
-		this.state = state;
-	}
-
-	public int getAddressId() {
-		return addressId;
-	}
-	public void setAddressId(int addressId) {
-		this.addressId = addressId;
-	}
-	public int getCustomerId() {
-		return customerId;
-	}
-	public void setCustomerId(int customerId) {
-		this.customerId = customerId;
-	}
-	public String getFullname() {
-		return fullname;
-	}
-	public void setFullname(String fullname) {
-		this.fullname = fullname;
-	}
-	public String getMobileNumber() {
-		return mobileNumber;
-	}
-	public void setMobileNumber(String mobileNumber) {
-		this.mobileNumber = mobileNumber;
-	}
-	public int getFlatNumber() {
-		return flatNumber;
-	}
-	public void setFlatNumber(int flatNumber) {
-		this.flatNumber = flatNumber;
-	}
-	public String getCity() {
-		return city;
-	}
-	public void setCity(String city) {
-		this.city = city;
-	}
-	public int getPincode() {
-		return pincode;
-	}
-	public void setPincode(int pincode) {
-		this.pincode = pincode;
-	}
-	public String getState() {
-		return state;
-	}
-	public void setState(String state) {
-		this.state = state;
-	}
-
 }

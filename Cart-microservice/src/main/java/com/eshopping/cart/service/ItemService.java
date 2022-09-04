@@ -56,6 +56,7 @@ public class ItemService {
 		item.setQuantity(1);
 		item.setAvailabilityStatus(product.getAvailabilityStatus());
 		item.setImage(product.getImage());
+		
 		return itemRepository.save(item);
 	}
 	
