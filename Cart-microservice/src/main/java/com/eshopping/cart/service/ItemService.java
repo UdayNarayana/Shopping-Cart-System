@@ -21,11 +21,6 @@ public class ItemService {
 	@Autowired
 	private RestTemplate restTemplate;
 	
-//	@RabbitListener(queues = MQConfig.QUEUE)
-//    public void listener(Product product) {
-//        useProduct = product;
-//    }
-	
 	private static final String PRODUCT_URL = "http://PRODUCT-MICROSERVICE/product/";
 	
 	
