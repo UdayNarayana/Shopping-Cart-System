@@ -63,7 +63,7 @@ public class UserService {
 	private static final String USERNAME_FORMAT = "^(?=[a-zA-Z0-9._]{3,20}$)(?!.*[_.]{2})[^_.].*[^_.]$";
 	
 	public List<User> getAllUsers(){
-		return userRepository.findAll();
+		return userRepository.findAll(); 
 	}
 	
 	public User getUserByUserId(int userId) {

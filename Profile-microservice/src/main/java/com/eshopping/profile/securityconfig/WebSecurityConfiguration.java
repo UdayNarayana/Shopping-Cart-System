@@ -65,7 +65,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 //				"/user/get-user-by-id/{userId}"
 				).hasAuthority("customer")
 //		.antMatchers("/user/login").hasAnyAuthority("customer","admin")
-		.antMatchers("/user/**").permitAll()
+		.antMatchers("/**").permitAll()
 		.anyRequest()
 		.authenticated()
 		.and()
